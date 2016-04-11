@@ -1,3 +1,5 @@
+package jh.playground.ignite.util;
+
 import org.apache.ignite.Ignition;
 
 public class StartNode {
