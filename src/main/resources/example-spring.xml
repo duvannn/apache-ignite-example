@@ -33,7 +33,7 @@
 
     <!-- Spring components -->
 
-    <!--bean id="slowValuationsCtx" name="slowBean" class="com.markit.valuations.ironbridge.util.SlowValuationsCtx"/-->
+    <!--<bean id="slowBean" class="jh.playground.ignite.spring.SlowBean"/>-->
 
     <!-- Grid load balancing -->
 

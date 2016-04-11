@@ -25,8 +25,8 @@ public class ValuationsTaskImpl extends ComputeTaskSplitAdapter<ValuationsReques
     @TaskSessionResource
     private ComputeTaskSession taskSes;
 
-//    @SpringResource(resourceName = "slowValuationsCtx")
-//    private transient SlowValuationsCtx slowValuationsCtx;
+//    @SpringResource(resourceName = "slowBean")
+//    private transient SlowBean slowBean;
 
     @Override
     protected Collection<? extends ComputeJob> split(int gridSize, ValuationsRequest req) throws IgniteException {

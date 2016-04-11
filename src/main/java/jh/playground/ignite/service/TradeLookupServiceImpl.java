@@ -22,8 +22,8 @@ public class TradeLookupServiceImpl implements Service, TradeLookupService {
     @LoggerResource
     private IgniteLogger log;
 
-//    @SpringResource(resourceName = "slowValuationsCtx")
-//    private transient SlowValuationsCtx slowValuationsCtx;
+//    @SpringResource(resourceName = "slowBean")
+//    private transient SlowBean slowBean;
 
     private IgniteCache<Integer, Trade> tradeCache;
 

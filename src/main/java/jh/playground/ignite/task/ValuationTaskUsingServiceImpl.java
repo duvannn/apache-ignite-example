@@ -29,6 +29,9 @@ public class ValuationTaskUsingServiceImpl extends ComputeTaskSplitAdapter<Valua
     @ServiceResource(serviceName = "valuationService", proxySticky = false)
     private ValuationService valSvc;
 
+//    @SpringResource(resourceName = "slowBean")
+//    private transient SlowBean slowBean;
+
     @Override
     protected Collection<? extends ComputeJob> split(int gridSize, ValuationRequest req) throws IgniteException {
         return Collections.singleton(new ComputeJobAdapter() {
