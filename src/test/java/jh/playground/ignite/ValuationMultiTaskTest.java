@@ -22,7 +22,7 @@ public class ValuationMultiTaskTest {
         // Why does it not work with client xml?
 //        try (Ignite ignite = Ignition.start("examples/config/ironbridge/ib-client.xml")) {
         // So we need to start the slow val ctx too?
-        try (Ignite ignite = Ignition.start("examples/config/ironbridge/ib.xml")) {
+        try (Ignite ignite = Ignition.start("example-spring.xml")) {
 
             // Use trade lookup API
             TradeLookupService tradeSvc = ignite.services().serviceProxy("tradeService", TradeLookupService.class, false);

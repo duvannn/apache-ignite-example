@@ -7,7 +7,7 @@ import org.apache.ignite.Ignition;
 public class TradeLookupServiceTest {
     public static void main(String[] args) {
         Ignition.setClientMode(true);
-        try (Ignite ignite = Ignition.start("examples/config/ironbridge/ib-client.xml")) {
+        try (Ignite ignite = Ignition.start("example-spring.xml")) {
 
             // Use trade lookup API
             TradeLookupService svc = ignite.services().serviceProxy("tradeService", TradeLookupService.class, true);

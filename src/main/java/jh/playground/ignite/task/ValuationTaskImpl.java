@@ -11,8 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.PrimitiveIterator;
-import java.util.stream.IntStream;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ValuationTaskImpl extends ComputeTaskSplitAdapter<ValuationRequest, Valuation> {
     @IgniteInstanceResource
@@ -26,7 +25,7 @@ public class ValuationTaskImpl extends ComputeTaskSplitAdapter<ValuationRequest,
 
     @Override
     protected Collection<? extends ComputeJob> split(int gridSize, ValuationRequest req) throws IgniteException {
-        PrimitiveIterator.OfInt tradesValued = IntStream.iterate(0, i -> i + 1).iterator();
+        AtomicInteger tradesValued = new AtomicInteger();
         return Collections.singleton(new ComputeJobAdapter() {
             @Override
             public Object execute() throws IgniteException {
@@ -40,7 +39,7 @@ public class ValuationTaskImpl extends ComputeTaskSplitAdapter<ValuationRequest,
                     e.printStackTrace();
                 }
 
-                return new Valuation(tradesValued.nextInt(), req.valuationDate, 1.5, 2.5);
+                return new Valuation(tradesValued.incrementAndGet(), req.valuationDate, 1.5, 2.5);
             }
         });
     }

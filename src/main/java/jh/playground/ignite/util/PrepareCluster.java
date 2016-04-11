@@ -1,15 +1,14 @@
 package jh.playground.ignite.util;
 
 import jh.playground.ignite.domain.Trade;
-import org.apache.ignite.Ignite;
-import org.apache.ignite.IgniteCache;
-import org.apache.ignite.IgniteException;
-import org.apache.ignite.Ignition;
+import jh.playground.ignite.service.TradeLookupServiceImpl;
+import jh.playground.ignite.service.ValuationServiceImpl;
+import org.apache.ignite.*;
 
 public class PrepareCluster {
     public static void main(String[] args) throws IgniteException {
         Ignition.setClientMode(true);
-        try (Ignite ignite = Ignition.start("examples/config/ironbridge/ib-client.xml")) {
+        try (Ignite ignite = Ignition.start("example-spring.xml")) {
             // Caches
 //            IgniteCache<Integer, Trade> cache = ignite.getOrCreateCache("Trades");
             initializeTradeCache();

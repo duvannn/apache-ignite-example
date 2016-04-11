@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 public class ValuationServiceTest {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         Ignition.setClientMode(true);
-        try (Ignite ignite = Ignition.start("examples/config/ironbridge/ib-client.xml")) {
+        try (Ignite ignite = Ignition.start("example-spring.xml")) {
 
             // Use valuations API
             IgniteServices svcs = ignite.services();

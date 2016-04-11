@@ -21,7 +21,7 @@ public class ValuationsTaskTest {
     public static void main(String[] args) {
         Ignition.setClientMode(true);
         // Why does it not work with client xml?
-        try (Ignite ignite = Ignition.start("examples/config/ironbridge/ib-client.xml")) {
+        try (Ignite ignite = Ignition.start("example-spring.xml")) {
             // So we need to start the slow val ctx too?
 //        try (Ignite ignite = Ignition.start("examples/config/ironbridge/ib.xml")) {
 
