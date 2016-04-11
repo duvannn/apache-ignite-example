@@ -8,7 +8,7 @@ import org.apache.ignite.*;
 public class PrepareCluster {
     public static void main(String[] args) throws IgniteException {
         Ignition.setClientMode(true);
-        try (Ignite ignite = Ignition.start("example-spring.xml")) {
+        try (Ignite ignite = Ignition.start("example-ignite.xml")) {
             // Caches
 //            IgniteCache<Integer, Trade> cache = ignite.getOrCreateCache("Trades");
             initializeTradeCache();

@@ -18,8 +18,7 @@ public class ValuationMultiServiceTest {
         ExecutorService ex = Executors.newFixedThreadPool(10);
 
         Ignition.setClientMode(true);
-        try (Ignite ignite = Ignition.start("example-spring.xml")) {
-
+        try (Ignite ignite = Ignition.start("example-ignite.xml")) {
             // Use valuations API
             IgniteServices svcs = ignite.services();
 

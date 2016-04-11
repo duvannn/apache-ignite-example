@@ -3,8 +3,10 @@ package jh.playground.ignite.task;
 import jh.playground.ignite.domain.Valuation;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteException;
+import org.apache.ignite.IgniteLogger;
 import org.apache.ignite.compute.*;
 import org.apache.ignite.resources.IgniteInstanceResource;
+import org.apache.ignite.resources.LoggerResource;
 import org.apache.ignite.resources.TaskSessionResource;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,6 +18,9 @@ import java.util.stream.Collectors;
 public class ValuationsTaskImpl extends ComputeTaskSplitAdapter<ValuationsRequest, Collection<Valuation>> {
     @IgniteInstanceResource
     private Ignite ignite;
+
+    @LoggerResource
+    private IgniteLogger log;
 
     @TaskSessionResource
     private ComputeTaskSession taskSes;
@@ -29,9 +34,8 @@ public class ValuationsTaskImpl extends ComputeTaskSplitAdapter<ValuationsReques
         return req.trades.stream().map(t -> new ComputeJobAdapter() {
             @Override
             public Object execute() throws IgniteException {
-                String msg = String.format("%s (%s) - [%s] - valuation requested for trade %s",
-                        taskSes.getTaskName(), taskSes.getId(), Thread.currentThread().getName(), t);
-                System.out.println(msg);
+                String msg = String.format("%s (%s) valuing trade %s", taskSes.getTaskName(), taskSes.getId(), t);
+                log.info(msg);
 
                 try {
                     Thread.sleep(5000L);

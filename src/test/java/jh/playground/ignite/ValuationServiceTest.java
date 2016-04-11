@@ -12,8 +12,7 @@ import java.util.concurrent.ExecutionException;
 public class ValuationServiceTest {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         Ignition.setClientMode(true);
-        try (Ignite ignite = Ignition.start("example-spring.xml")) {
-
+        try (Ignite ignite = Ignition.start("example-ignite.xml")) {
             // Use valuations API
             IgniteServices svcs = ignite.services();
             ValuationService valSvc = svcs.serviceProxy("valuationService", ValuationService.class, false);

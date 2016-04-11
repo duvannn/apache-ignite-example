@@ -4,12 +4,12 @@ import jh.playground.ignite.api.ValuationService;
 import jh.playground.ignite.domain.Valuation;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteException;
-import org.apache.ignite.compute.ComputeJob;
-import org.apache.ignite.compute.ComputeJobAdapter;
-import org.apache.ignite.compute.ComputeJobResult;
-import org.apache.ignite.compute.ComputeTaskSplitAdapter;
+import org.apache.ignite.IgniteLogger;
+import org.apache.ignite.compute.*;
 import org.apache.ignite.resources.IgniteInstanceResource;
+import org.apache.ignite.resources.LoggerResource;
 import org.apache.ignite.resources.ServiceResource;
+import org.apache.ignite.resources.TaskSessionResource;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
@@ -20,6 +20,12 @@ public class ValuationTaskUsingServiceImpl extends ComputeTaskSplitAdapter<Valua
     @IgniteInstanceResource
     private Ignite ignite;
 
+    @LoggerResource
+    private IgniteLogger log;
+
+    @TaskSessionResource
+    private ComputeTaskSession taskSes;
+
     @ServiceResource(serviceName = "valuationService", proxySticky = false)
     private ValuationService valSvc;
 
@@ -28,8 +34,8 @@ public class ValuationTaskUsingServiceImpl extends ComputeTaskSplitAdapter<Valua
         return Collections.singleton(new ComputeJobAdapter() {
             @Override
             public Object execute() throws IgniteException {
-                String msg = String.format("ValuationsTask - [%s] - valuation request %s", Thread.currentThread().getName(), req);
-                System.out.println(msg);
+                String msg = String.format("%s (%s) valuing trade %s", taskSes.getTaskName(), taskSes.getId(), req);
+                log.info(msg);
 
                 try {
                     Thread.sleep(5000L);
