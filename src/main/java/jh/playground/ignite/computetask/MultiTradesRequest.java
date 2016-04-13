@@ -1,4 +1,4 @@
-package jh.playground.ignite.task;
+package jh.playground.ignite.computetask;
 
 
 import jh.playground.ignite.domain.Trade;
@@ -6,18 +6,18 @@ import jh.playground.ignite.domain.Trade;
 import java.util.Collection;
 import java.util.Date;
 
-public class ValuationsRequest {
-    public Collection<Trade> trades;
-    public Date valuationDate;
+public class MultiTradesRequest {
+    Collection<Trade> trades;
+    Date valuationDate;
 
-    public ValuationsRequest(Collection<Trade> trades, Date valuationDate) {
+    public MultiTradesRequest(Collection<Trade> trades, Date valuationDate) {
         this.trades = trades;
         this.valuationDate = valuationDate;
     }
 
     @Override
     public String toString() {
-        return "ValuationsRequest{" +
+        return "MultiTradesRequest{" +
                 "trades=" + trades +
                 ", valuationDate=" + valuationDate +
                 '}';

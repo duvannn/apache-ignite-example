@@ -1,5 +1,6 @@
-package jh.playground.ignite.task;
+package jh.playground.ignite.computetask;
 
+import jh.playground.ignite.api.ValuationService;
 import jh.playground.ignite.domain.Valuation;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteException;
@@ -7,15 +8,15 @@ import org.apache.ignite.IgniteLogger;
 import org.apache.ignite.compute.*;
 import org.apache.ignite.resources.IgniteInstanceResource;
 import org.apache.ignite.resources.LoggerResource;
+import org.apache.ignite.resources.ServiceResource;
 import org.apache.ignite.resources.TaskSessionResource;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class ValuationTaskImpl extends ComputeTaskSplitAdapter<ValuationRequest, Valuation> {
+public class SingleTradeValuationTaskUsingServiceImpl extends ComputeTaskSplitAdapter<SingleTradeRequest, Valuation> {
     @IgniteInstanceResource
     private Ignite ignite;
 
@@ -25,12 +26,14 @@ public class ValuationTaskImpl extends ComputeTaskSplitAdapter<ValuationRequest,
     @TaskSessionResource
     private ComputeTaskSession taskSes;
 
+    @ServiceResource(serviceName = "valuationService") // proxySticky = false
+    private ValuationService valSvc;
+
 //    @SpringResource(resourceName = "slowBean")
 //    private transient SlowBean slowBean;
 
     @Override
-    protected Collection<? extends ComputeJob> split(int gridSize, ValuationRequest req) throws IgniteException {
-        AtomicInteger tradesValued = new AtomicInteger();
+    protected Collection<? extends ComputeJob> split(int gridSize, SingleTradeRequest req) throws IgniteException {
         return Collections.singleton(new ComputeJobAdapter() {
             @Override
             public Object execute() throws IgniteException {
@@ -43,7 +46,7 @@ public class ValuationTaskImpl extends ComputeTaskSplitAdapter<ValuationRequest,
                     e.printStackTrace();
                 }
 
-                return new Valuation(tradesValued.incrementAndGet(), req.valuationDate, 1.5, 2.5);
+                return valSvc.value("TestClient", req.trade.tradeId, req.valuationDate);
             }
         });
     }

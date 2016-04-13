@@ -1,11 +1,11 @@
 package jh.playground.ignite;
 
 import jh.playground.ignite.api.TradeLookupService;
+import jh.playground.ignite.computetask.MultiTradesRequest;
+import jh.playground.ignite.computetask.MultiTradesValuationTaskImpl;
+import jh.playground.ignite.computetask.MultiTradesValuationTaskUsingServiceImpl;
 import jh.playground.ignite.domain.Trade;
 import jh.playground.ignite.domain.Valuation;
-import jh.playground.ignite.task.ValuationsRequest;
-import jh.playground.ignite.task.ValuationsTaskImpl;
-import jh.playground.ignite.task.ValuationsTaskUsingServiceImpl;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCompute;
 import org.apache.ignite.Ignition;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ValuationsTaskTest {
+public class ValuationTaskMultiTest {
     public static void main(String[] args) {
         Ignition.setClientMode(true);
         try (Ignite ignite = Ignition.start("example-ignite.xml")) {
@@ -26,7 +26,7 @@ public class ValuationsTaskTest {
             IgniteCompute compute = ignite.compute();
 
             List<Trade> trades = IntStream.range(0, 10).mapToObj(tradeSvc::lookup).collect(Collectors.toList());
-            ValuationsRequest req = new ValuationsRequest(trades, new Date());
+            MultiTradesRequest req = new MultiTradesRequest(trades, new Date());
 
             System.out.println("Requesting valuations via task for request " + req);
             Collection<Valuation> vals = compute.execute(task(false), req);
@@ -37,8 +37,8 @@ public class ValuationsTaskTest {
         }
     }
 
-    private static Class<? extends ComputeTask<ValuationsRequest, Collection<Valuation>>> task(boolean usingService) {
-        return usingService ? ValuationsTaskUsingServiceImpl.class : ValuationsTaskImpl.class;
+    private static Class<? extends ComputeTask<MultiTradesRequest, Collection<Valuation>>> task(boolean usingService) {
+        return usingService ? MultiTradesValuationTaskUsingServiceImpl.class : MultiTradesValuationTaskImpl.class;
     }
 
 }
