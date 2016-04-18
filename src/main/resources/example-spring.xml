@@ -43,7 +43,14 @@
     <!-- Grid caches -->
 
     <util:list id="cacheConfigurations">
-        <bean class="org.apache.ignite.configuration.CacheConfiguration" p:name="Trades"/>
+        <bean class="org.apache.ignite.configuration.CacheConfiguration" p:name="Trades">
+            <!-- Set cache mode. -->
+            <property name="cacheMode" value="PARTITIONED"/>
+
+            <!-- Number of backup nodes. -->
+            <property name="backups" value="1"/>
+
+        </bean>
     </util:list>
 
     <!-- Grid services -->

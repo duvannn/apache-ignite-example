@@ -43,7 +43,7 @@ public class SingleTradeValuationTaskImpl extends ComputeTaskSplitAdapter<Single
                     e.printStackTrace();
                 }
 
-                return new Valuation(tradesValued.incrementAndGet(), req.valuationDate, 1.5, 2.5);
+                return new Valuation(tradesValued.incrementAndGet(), req.valuationDate, 1.5, 2.5, req.trade.tradeId);
             }
         });
     }
