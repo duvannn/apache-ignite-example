@@ -24,6 +24,12 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toList;
 
 public class AffinityServiceTest {
+
+
+    /**
+     * run valuations asynchronously on the nodes that are storing the given trade
+     * @param args
+     */
     public static void main(String[] args) {
 
         Ignition.setClientMode(true);
