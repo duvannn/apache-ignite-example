@@ -16,6 +16,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ValuationServiceImpl implements Service, ValuationService {
     @IgniteInstanceResource
@@ -29,7 +30,7 @@ public class ValuationServiceImpl implements Service, ValuationService {
 
     private IgniteCache<Integer, Trade> tradeCache;
 
-    private int tradesValued;
+    private AtomicInteger tradesValued = new AtomicInteger(0);
 
     private Instant startedAt;
     private UUID serviceUuid;
@@ -57,16 +58,15 @@ public class ValuationServiceImpl implements Service, ValuationService {
 
     @Override
     public Valuation value(String client, String tradeId, Date valuationDate) {
-        String msg = String.format("%s (%s) valuing trade (%s, %s, %s)", serviceName, serviceUuid, client, tradeId, valuationDate);
-        log.info(msg);
-        tradesValued++;
+        int pkey = tradesValued.incrementAndGet();
+        log.info(String.format("%s (%s) valuing trade (%s, %s, %s) - %s", serviceName, serviceUuid, client, tradeId, valuationDate, "" + tradesValued.hashCode() + " -" + pkey));
 
         try {
             Thread.sleep(5000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        return new Valuation(tradesValued, valuationDate, 1.0, 2.0);
+        log.info(String.format("%s (%s) valued trade (%s, %s, %s) - %s", serviceName, serviceUuid, client, tradeId, valuationDate, "" + tradesValued.hashCode() + " -" + pkey));
+        return new Valuation(pkey, valuationDate, 1.0, 2.0, tradeId);
     }
 }

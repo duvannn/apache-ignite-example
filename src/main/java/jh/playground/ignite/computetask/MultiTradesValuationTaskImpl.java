@@ -43,7 +43,7 @@ public class MultiTradesValuationTaskImpl extends ComputeTaskSplitAdapter<MultiT
                     e.printStackTrace();
                 }
 
-                return new Valuation(tradesValued.incrementAndGet(), req.valuationDate, 1.5, 2.5);
+                return new Valuation(tradesValued.incrementAndGet(), req.valuationDate, 1.5, 2.5, t.tradeId);
             }
         }).collect(Collectors.toList());
     }

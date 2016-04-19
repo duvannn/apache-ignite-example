@@ -7,13 +7,15 @@ public class Valuation {
     private Date valuationDate;
     private double pv;
     private double pvLocal;
+    private final String tradeId;
 
 
-    public Valuation(int valuationPkey, Date valuationDate, double pv, double pvLocal) {
+    public Valuation(int valuationPkey, Date valuationDate, double pv, double pvLocal, String tradeId) {
         this.valuationPkey = valuationPkey;
         this.valuationDate = valuationDate;
         this.pv = pv;
         this.pvLocal = pvLocal;
+        this.tradeId = tradeId;
     }
 
     @Override
@@ -21,6 +23,7 @@ public class Valuation {
         return "Valuation{" +
                 "valuationDate=" + valuationDate +
                 ", valuationPkey=" + valuationPkey +
+                ", tradeId=" + tradeId +
                 ", pv=" + pv +
                 ", pvLocal=" + pvLocal +
                 '}';
