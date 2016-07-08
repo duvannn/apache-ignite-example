@@ -1,22 +1,18 @@
 package jh.playground.ignite;
 
 import jh.playground.ignite.api.ValuationService;
-import jh.playground.ignite.domain.Valuation;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteServices;
 import org.apache.ignite.Ignition;
 
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.*;
-import java.util.stream.Collectors;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class ValuationServiceExecutorServiceTest {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
-        // Does not work with ignite.executorService()...
-        ExecutorService ex = Executors.newFixedThreadPool(10);
-
         Ignition.setClientMode(true);
         try (Ignite ignite = Ignition.start("example-ignite.xml")) {
             // Use valuations API
@@ -24,21 +20,27 @@ public class ValuationServiceExecutorServiceTest {
 
             ValuationService valSvc = svcs.serviceProxy("valuationService", ValuationService.class, false);
 
-            List<Callable<Valuation>> tasks = IntStream.range(0, 10).mapToObj(i -> (Callable<Valuation>) () -> {
-                String tradeId = "TID_" + i;
-                System.out.println("Requesting valuation via service for trade " + tradeId);
-                return valSvc.value("TestClient", tradeId, new Date());
-            }).collect(Collectors.toList());
+            Stream<ValRequest> reqs = IntStream.range(0, 100).mapToObj(i -> new ValRequest("TestClient", "TID_" + i, new Date()));
+            CompletableFuture[] vals = reqs.map(r -> CompletableFuture.supplyAsync(() -> {
+                System.out.println("Requesting valuation via service for trade " + r.tradeId);
+                return valSvc.value(r.client, r.tradeId, r.valuationDate);
+            }).thenAccept(v -> System.out.println("Valued trade via service: " + v))).toArray(CompletableFuture[]::new);
 
-            List<Future<Valuation>> valsF = ex.invokeAll(tasks);
-
-            for (Future<Valuation> valF : valsF) {
-                System.out.println("Valued trade via service: " + valF.get());
-            }
+            CompletableFuture.allOf(vals).join();
         }
 
-        ex.shutdownNow();
-        ex.awaitTermination(10, TimeUnit.SECONDS);
+    }
 
+    private static class ValRequest {
+        final String client;
+        final String tradeId;
+        final Date valuationDate;
+
+
+        private ValRequest(String client, String tradeId, Date valuationDate) {
+            this.client = client;
+            this.tradeId = tradeId;
+            this.valuationDate = valuationDate;
+        }
     }
 }
