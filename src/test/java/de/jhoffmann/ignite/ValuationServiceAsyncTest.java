@@ -1,7 +1,7 @@
-package jh.playground.ignite;
+package de.jhoffmann;
 
-import jh.playground.ignite.api.ValuationService;
-import jh.playground.ignite.domain.Valuation;
+import de.jhoffmann.api.ValuationService;
+import de.jhoffmann.domain.Valuation;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteServices;
 import org.apache.ignite.Ignition;

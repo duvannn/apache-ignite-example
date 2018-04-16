@@ -1,11 +1,11 @@
-package jh.playground.ignite;
+package de.jhoffmann;
 
-import jh.playground.ignite.api.TradeLookupService;
-import jh.playground.ignite.computetask.SingleTradeRequest;
-import jh.playground.ignite.computetask.SingleTradeValuationTaskImpl;
-import jh.playground.ignite.computetask.SingleTradeValuationTaskUsingServiceImpl;
-import jh.playground.ignite.domain.Trade;
-import jh.playground.ignite.domain.Valuation;
+import de.jhoffmann.api.TradeLookupService;
+import de.jhoffmann.computetask.SingleTradeRequest;
+import de.jhoffmann.computetask.SingleTradeValuationTaskImpl;
+import de.jhoffmann.computetask.SingleTradeValuationTaskUsingServiceImpl;
+import de.jhoffmann.domain.Trade;
+import de.jhoffmann.domain.Valuation;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCompute;
 import org.apache.ignite.Ignition;

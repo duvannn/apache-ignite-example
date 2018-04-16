@@ -1,10 +1,10 @@
-package jh.playground.ignite;
+package de.jhoffmann;
 
-import jh.playground.ignite.api.TradeLookupService;
-import jh.playground.ignite.api.ValuationService;
-import jh.playground.ignite.domain.Trade;
-import jh.playground.ignite.domain.Valuation;
-import jh.playground.ignite.service.ValuationServiceImpl;
+import de.jhoffmann.api.TradeLookupService;
+import de.jhoffmann.api.ValuationService;
+import de.jhoffmann.domain.Trade;
+import de.jhoffmann.domain.Valuation;
+import de.jhoffmann.service.ValuationServiceImpl;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCompute;
 import org.apache.ignite.IgniteServices;

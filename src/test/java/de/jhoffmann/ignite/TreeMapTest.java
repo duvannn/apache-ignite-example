@@ -1,4 +1,4 @@
-package jh.playground.ignite;
+package de.jhoffmann;
 
 import org.apache.ignite.Ignite;
 import org.apache.ignite.Ignition;

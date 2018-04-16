@@ -1,11 +1,11 @@
-package jh.playground.ignite;
+package de.jhoffmann;
 
-import jh.playground.ignite.api.TradeLookupService;
-import jh.playground.ignite.computetask.MultiTradesRequest;
-import jh.playground.ignite.computetask.MultiTradesValuationTaskImpl;
-import jh.playground.ignite.computetask.MultiTradesValuationTaskUsingServiceImpl;
-import jh.playground.ignite.domain.Trade;
-import jh.playground.ignite.domain.Valuation;
+import de.jhoffmann.api.TradeLookupService;
+import de.jhoffmann.computetask.MultiTradesRequest;
+import de.jhoffmann.computetask.MultiTradesValuationTaskImpl;
+import de.jhoffmann.computetask.MultiTradesValuationTaskUsingServiceImpl;
+import de.jhoffmann.domain.Trade;
+import de.jhoffmann.domain.Valuation;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCompute;
 import org.apache.ignite.Ignition;

@@ -1,6 +1,6 @@
-package jh.playground.ignite;
+package de.jhoffmann;
 
-import jh.playground.ignite.api.TradeLookupService;
+import de.jhoffmann.api.TradeLookupService;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.Ignition;
 
